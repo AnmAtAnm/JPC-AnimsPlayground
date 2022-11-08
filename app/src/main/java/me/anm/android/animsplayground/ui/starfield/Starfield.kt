@@ -38,7 +38,6 @@ const val MAX_DUR = 7f
 fun Starfield(
     modifier: Modifier = Modifier,
     steeringFn: () -> Offset = { Offset.Zero },
-    onDrawOverlay: (DrawScope.() -> Unit)? = null
 ) {
     var state: StarfieldState by remember { mutableStateOf(StarfieldState()) }
     var lastFrameNanos: Long by remember { mutableStateOf(System.nanoTime()) }
@@ -60,9 +59,6 @@ fun Starfield(
                     )
                 }
             }
-        }
-        if (onDrawOverlay != null) {
-            onDrawOverlay()
         }
     }
 

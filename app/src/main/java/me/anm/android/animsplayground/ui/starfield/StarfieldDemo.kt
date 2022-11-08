@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -284,17 +285,20 @@ fun StarfieldDemo(viewModel: StarfieldDemoViewModel = viewModel()) {
                                 onDragEnd = onNoSteeringInput,
                                 onDragCancel = onNoSteeringInput
                             )
+                        }
+                        .drawWithContent {
+                            drawContent()
+
+                            // Draw target
+                            drawCircle(
+                                color = Color.White,
+                                alpha = viewModel.targetAlpha.value,
+                                radius = 100f,
+                                center = center + steering + (demoInput.value * viewModel.demoInputWeight.value),
+                                style = Stroke(width = viewModel.targetStroke.value)
+                            )
                         },
                     steeringFn = steeringFn,
-                    onDrawOverlay = {
-                        drawCircle(
-                            color = Color.White,
-                            alpha = viewModel.targetAlpha.value,
-                            radius = 100f,
-                            center = center + steering + (demoInput.value * viewModel.demoInputWeight.value),
-                            style = Stroke(width = viewModel.targetStroke.value)
-                        )
-                    }
                 )
                 // Align overs at the bottom center of the screen
                 Column(
